@@ -1,7 +1,9 @@
 name: main
 
 on: 
- workflow_call
+  push:
+    paths: 
+      - .github/workflows/build.yml
 
 jobs:
   android:
