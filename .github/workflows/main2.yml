@@ -24,5 +24,33 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: plugin_lua54
+          name: plugin_lua54-android
+          path: ./build/plugin_lua54/
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          cd build
+          ./make_ios_lua54.sh
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin_lua54-ios
+          path: ./build/plugin_lua54/
+  windows:
+    runs-on: windows-2016
+    steps:
+      - uses: actions/checkout@v3
+      - name: Insatll MSVC
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Build
+        run: |
+          cd build
+          .\make_win_lua54.bat
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin_lua54-windows
           path: ./build/plugin_lua54/
