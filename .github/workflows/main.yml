@@ -1,16 +1,13 @@
 name: main
 
 on: 
-  push:
-    paths: 
-      - build/**
-      - .github/workflows/main.yml
+ workflow_call
 
 jobs:
   android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install NDK
         run: |
           cd ~
@@ -23,7 +20,8 @@ jobs:
           cd build
           ./make_android_lua54.sh
       - name: Upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          path: ./build/plugin_lua54/**/*
           name: plugin_lua54
+          path: ./build/plugin_lua54/
+
