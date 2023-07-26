@@ -40,8 +40,7 @@ jobs:
           name: plugin_lua54-ios
           path: ./build/plugin_lua54/
   osx:
-    runs-on: macos-10.15
-
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build
