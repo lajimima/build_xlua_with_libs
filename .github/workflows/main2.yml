@@ -39,12 +39,25 @@ jobs:
         with:
           name: plugin_lua54-ios
           path: ./build/plugin_lua54/
+  osx:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |
+          cd build
+          ./make_osx_lua54.sh
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin_lua54-macos
+          path: ./build/plugin_lua54/
   windows:
-    runs-on: windows-2016
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v3
       - name: Insatll MSVC
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v1.1
       - name: Build
         run: |
           cd build
