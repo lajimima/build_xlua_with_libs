@@ -130,52 +130,6 @@ static void report_table(Table *h, ObjectRelationshipReport cb)
 
 LUA_API void xlua_report_object_relationship(lua_State *L, ObjectRelationshipReport cb)
 {
-	GCObject *p = G(L)->allgc;
-	lua_Debug ar;
-	int i;
-	const char *name;
-	
-	while (p != NULL)
-	{
-		if (p->tt == LUA_TTABLE)
-		{
-			Table *h = gco2t(p);
-			report_table(h, cb);
-		}
-#if LUA_VERSION_NUM >= 504
-		else if (p->tt == LUA_VLCL)
-#else
-		else if (p->tt == LUA_TLCL)
-#endif
-		{
-			LClosure *cl = gco2lcl(p);
-			lua_lock(L);
-			setclLvalue(L, L->top, cl);
-			api_incr_top(L);
-			lua_unlock(L);
-			
-			lua_pushvalue(L, -1);
-			
-			lua_getinfo(L, ">S", &ar);
-			
-			for (i=1;;i++)
-			{
-				name = lua_getupvalue(L,-1,i);
-				if (name == NULL)
-					break;
-				const void *pv = lua_topointer(L, -1);
-				
-				if (*name != '\0' && LUA_TTABLE == lua_type(L, -1))
-				{
-					cb(cl, pv, 5, ar.short_src, ar.linedefined, name);
-				}
-				lua_pop(L, 1);
-			}
-			
-			lua_pop(L, 1);
-		}
-		p = p->next;
-	}
 }
 
 LUA_API void *xlua_registry_pointer(lua_State *L)
