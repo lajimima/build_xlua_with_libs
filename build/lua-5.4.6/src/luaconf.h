@@ -760,7 +760,7 @@
 ** of a function in debug information.
 ** CHANGE it if you want a different size.
 */
-#cmakedefine LUA_IDSIZE	@LUA_IDSIZE@
+#define LUA_IDSIZE	60
 
 
 /*
